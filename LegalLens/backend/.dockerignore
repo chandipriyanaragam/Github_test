@@ -1,0 +1,6 @@
+.env
+.venv
+.uv-cache
+var
+__pycache__
+*.py[cod]

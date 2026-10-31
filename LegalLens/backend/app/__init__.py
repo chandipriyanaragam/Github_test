@@ -1,0 +1,1 @@
+"""LegalLens standalone backend."""

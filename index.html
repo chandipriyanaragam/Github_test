@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PulsePath | Intake workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root { --ink:#172429; --muted:#66757a; --line:#dce5e2; --paper:#f7f9f8; --white:#fff; --teal:#006f6b; --teal-pale:#dff3f0; --coral:#c04c38; --coral-pale:#fbe8e4; --sun:#e8b64d; --sun-pale:#fff4d8; --green:#317a57; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--paper); color:var(--ink); font-family:Manrope,Arial,sans-serif; font-size:14px; letter-spacing:0; }
+    button, textarea { font:inherit; } button { cursor:pointer; } .app { min-height:100vh; display:grid; grid-template-columns:238px 1fr; }
+    .sidebar { background:#183c3c; color:#eaf3f1; padding:22px 14px; display:flex; flex-direction:column; gap:30px; }
+    .brand { display:flex; align-items:center; gap:10px; padding:0 9px; font-size:18px; font-weight:800; } .brand-mark { display:grid; place-items:center; width:28px; height:28px; background:#a9ded2; color:#123734; border-radius:7px; }
+    .unit { background:#28504e; border:1px solid #3c6562; border-radius:7px; padding:12px; } .eyebrow { color:#87bcb2; font:11px 'DM Mono',monospace; text-transform:uppercase; letter-spacing:0; } .unit strong { display:block; margin-top:4px; font-size:13px; }
+    nav { display:grid; gap:4px; } .nav-item { width:100%; border:0; background:transparent; color:#bcd0cc; display:flex; align-items:center; gap:11px; padding:10px 11px; border-radius:6px; text-align:left; } .nav-item.active { background:#2b5754; color:#fff; font-weight:700; } .nav-item i { width:17px; height:17px; }
+    .side-bottom { margin-top:auto; border-top:1px solid #3d605d; padding:18px 9px 0; color:#bcd0cc; font-size:12px; line-height:1.55; } .avatar { display:inline-grid; place-items:center; margin-right:8px; width:27px; height:27px; border-radius:50%; background:#e8b64d; color:#183c3c; font-weight:800; }
+    main { min-width:0; } .topbar { height:74px; padding:0 30px; background:var(--white); border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; } .topbar h1 { margin:0; font-size:18px; } .topbar p { margin:2px 0 0; color:var(--muted); font-size:12px; } .status { display:flex; align-items:center; gap:8px; color:var(--green); font-weight:700; font-size:12px; } .dot { width:8px; height:8px; border-radius:50%; background:#46a879; }
+    .content { padding:24px 30px 34px; max-width:1560px; margin:auto; } .metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; } .metric { background:#fff; border:1px solid var(--line); border-radius:7px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; } .metric-label { color:var(--muted); font-size:12px; } .metric-value { font-size:21px; font-weight:800; } .metric-icon { width:32px; height:32px; display:grid; place-items:center; border-radius:6px; background:var(--teal-pale); color:var(--teal); } .metric:nth-child(2) .metric-icon { background:var(--sun-pale); color:#9b6a00; } .metric:nth-child(3) .metric-icon { background:var(--coral-pale); color:var(--coral); }
+    .workspace { display:grid; grid-template-columns:minmax(320px,.84fr) minmax(440px,1.16fr); gap:18px; align-items:start; } .panel { background:var(--white); border:1px solid var(--line); border-radius:7px; overflow:hidden; } .panel-head { padding:15px 17px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; } .panel-title { font-weight:800; font-size:14px; } .panel-sub { margin-top:2px; color:var(--muted); font-size:11px; }
+    .capture { padding:17px; } textarea { width:100%; min-height:260px; resize:vertical; border:1px solid #cbd8d5; border-radius:6px; padding:13px; line-height:1.58; color:var(--ink); outline:0; } textarea:focus { border-color:var(--teal); box-shadow:0 0 0 3px #dff3f080; } .capture-footer { display:flex; gap:9px; margin-top:12px; align-items:center; } .secondary, .primary, .icon-button { border-radius:6px; border:1px solid var(--line); background:#fff; min-height:34px; padding:0 11px; color:var(--ink); font-weight:700; font-size:12px; display:inline-flex; align-items:center; gap:7px; } .primary { background:var(--teal); color:#fff; border-color:var(--teal); } .primary:hover { background:#005c58; } .icon-button { padding:0; width:34px; justify-content:center; } .muted-note { color:var(--muted); font-size:11px; margin-left:auto; }
+    .privacy { margin-top:14px; background:#f0f6f4; border-left:3px solid #85beb4; padding:10px 11px; color:#45615d; font-size:11px; line-height:1.45; }
+    .right-stack { display:grid; gap:18px; } .patient-bar { padding:14px 17px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--line); } .patient-avatar { width:38px; height:38px; display:grid; place-items:center; background:#e4eeeb; border-radius:50%; color:#3e615c; font-weight:800; } .patient-name { font-weight:800; } .patient-meta { margin-top:2px; color:var(--muted); font-size:11px; } .tag { padding:4px 7px; border-radius:4px; font:11px 'DM Mono',monospace; } .tag.coral { color:#9f3929; background:var(--coral-pale); } .tag.teal { color:#005c58; background:var(--teal-pale); } .patient-bar .tag { margin-left:auto; }
+    .summary-grid { display:grid; grid-template-columns:1fr 1fr; } .summary-cell { padding:15px 17px; border-bottom:1px solid var(--line); min-height:88px; } .summary-cell:nth-child(odd) { border-right:1px solid var(--line); } .summary-label { color:var(--muted); font:10px 'DM Mono',monospace; text-transform:uppercase; } .summary-value { margin-top:7px; font-size:13px; line-height:1.35; font-weight:700; } .evidence { margin-top:6px; font-size:11px; color:#55726d; }
+    .section { padding:15px 17px; border-bottom:1px solid var(--line); } .section:last-child { border:0; } .section h2 { margin:0 0 11px; font-size:13px; } .symptoms { display:flex; gap:7px; flex-wrap:wrap; } .symptom { display:flex; align-items:center; gap:5px; background:#eef5f3; color:#245650; padding:6px 8px; border-radius:5px; font-size:11px; font-weight:700; } .signal { width:6px; height:6px; border-radius:50%; background:#419477; } .risk-row { display:flex; justify-content:space-between; align-items:center; gap:15px; padding:10px 0; border-top:1px solid #edf1f0; } .risk-row:first-of-type { border-top:0; padding-top:0; } .risk-text strong { display:block; font-size:12px; } .risk-text span { color:var(--muted); font-size:11px; } .confidence { color:#697a77; font:10px 'DM Mono',monospace; white-space:nowrap; }
+    .handoff { padding:17px; display:grid; gap:12px; } .handoff-copy { color:#38504d; line-height:1.55; font-size:12px; } .handoff-actions { display:flex; gap:8px; } .review-row { padding:11px 17px; background:#fff8e9; color:#735811; font-size:11px; display:flex; align-items:center; gap:7px; }
+    .toast { position:fixed; right:24px; bottom:24px; transform:translateY(90px); opacity:0; transition:.25s; background:#183c3c; color:#fff; padding:12px 15px; border-radius:6px; box-shadow:0 10px 25px #17242930; font-size:12px; } .toast.show { transform:translateY(0); opacity:1; }
+    @media (max-width:1000px) { .app { grid-template-columns:68px 1fr; } .sidebar { padding:18px 10px; } .brand span,.unit,.nav-item span,.side-bottom { display:none; } .brand { padding:0; justify-content:center; } .nav-item { justify-content:center; padding:11px; } .workspace { grid-template-columns:1fr; } } @media (max-width:620px) { .app { display:block; } .sidebar { display:none; } .topbar { padding:0 18px; } .content { padding:18px; } .metrics { grid-template-columns:1fr; } .summary-grid { grid-template-columns:1fr; } .summary-cell:nth-child(odd) { border-right:0; } .muted-note { display:none; } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark"><i data-lucide="activity"></i></span><span>PulsePath</span></div>
+      <div class="unit"><span class="eyebrow">Active unit</span><strong>Emergency Department</strong></div>
+      <nav aria-label="Primary navigation">
+        <button class="nav-item active"><i data-lucide="inbox"></i><span>Intake queue</span></button>
+        <button class="nav-item"><i data-lucide="users"></i><span>Patients</span></button>
+        <button class="nav-item"><i data-lucide="clipboard-list"></i><span>Handoffs</span></button>
+        <button class="nav-item"><i data-lucide="bar-chart-3"></i><span>Operations</span></button>
+      </nav>
+      <div class="side-bottom"><span class="avatar">MS</span> Maya Shah, RN<br><span style="padding-left:35px">Triage nurse</span></div>
+    </aside>
+    <main>
+      <header class="topbar"><div><h1>Intake workspace</h1><p>Convert narrative into a reviewable clinical handoff.</p></div><div class="status"><span class="dot"></span>Secure session</div></header>
+      <div class="content">
+        <section class="metrics" aria-label="Queue metrics"><div class="metric"><div><div class="metric-label">Waiting for triage</div><div class="metric-value">08</div></div><div class="metric-icon"><i data-lucide="users"></i></div></div><div class="metric"><div><div class="metric-label">Median intake time</div><div class="metric-value">04:18</div></div><div class="metric-icon"><i data-lucide="timer"></i></div></div><div class="metric"><div><div class="metric-label">Needs review</div><div class="metric-value">02</div></div><div class="metric-icon"><i data-lucide="triangle-alert"></i></div></div></section>
+        <section class="workspace">
+          <div class="panel">
+            <div class="panel-head"><div><div class="panel-title">Incoming narrative</div><div class="panel-sub">Source: patient portal message · 2 min ago</div></div><button class="icon-button" title="Clear narrative" id="clear"><i data-lucide="trash-2"></i></button></div>
+            <div class="capture"><textarea id="narrative" aria-label="Incoming patient narrative">Hi, this is for my dad, Robert. He has been having tightness in his chest since this morning, about 45 minutes now. It started while he was carrying groceries upstairs. He says it goes into his left arm and he feels sweaty and a little sick to his stomach. He has high blood pressure and had a stent put in a few years ago. He is awake and can talk, but says it is getting worse. We are at 14 Willow Lane.</textarea><div class="capture-footer"><button class="secondary" id="sample"><i data-lucide="sparkles"></i>Load example</button><button class="primary" id="analyze"><i data-lucide="scan-line"></i>Structure intake</button><span class="muted-note">Clinician review required</span></div><div class="privacy"><strong>Protected health information:</strong> This demo uses fictional data. In production, access, retention, and model use must follow the organization’s approved clinical and privacy controls.</div></div>
+          </div>
+          <div class="right-stack">
+            <div class="panel" id="results">
+              <div class="patient-bar"><div class="patient-avatar">RW</div><div><div class="patient-name">Robert Williams</div><div class="patient-meta">68 years · Male · Portal message</div></div><span class="tag coral">Urgent review</span></div>
+              <div class="summary-grid"><div class="summary-cell"><div class="summary-label">Chief concern</div><div class="summary-value">Exertional chest tightness with arm radiation</div><div class="evidence">"started while carrying groceries upstairs"</div></div><div class="summary-cell"><div class="summary-label">Onset & course</div><div class="summary-value">45 min ago, worsening</div><div class="evidence">"since this morning... getting worse"</div></div><div class="summary-cell"><div class="summary-label">Relevant history</div><div class="summary-value">Hypertension; prior coronary stent</div><div class="evidence">"high blood pressure... stent"</div></div><div class="summary-cell"><div class="summary-label">Current status</div><div class="summary-value">Awake, speaking; reports diaphoresis and nausea</div><div class="evidence">"awake and can talk"</div></div></div>
+              <div class="section"><h2>Reported symptoms</h2><div class="symptoms"><span class="symptom"><i data-lucide="heart-pulse" size="13"></i>Chest tightness</span><span class="symptom"><span class="signal"></span>Left arm radiation</span><span class="symptom"><span class="signal"></span>Diaphoresis</span><span class="symptom"><span class="signal"></span>Nausea</span><span class="symptom"><span class="signal"></span>Worsening</span></div></div>
+              <div class="section"><h2>Items to verify</h2><div class="risk-row"><div class="risk-text"><strong>Emergency escalation criteria may be present</strong><span>Chest symptoms, exertion, radiation, diaphoresis, cardiac history</span></div><span class="confidence">0.94 signal</span></div><div class="risk-row"><div class="risk-text"><strong>Address captured</strong><span>14 Willow Lane; confirm city and access instructions</span></div><span class="confidence">0.78 signal</span></div></div>
+              <div class="review-row"><i data-lucide="shield-alert" size="15"></i><span>Decision support only. Confirm facts and follow local clinical protocols before action.</span></div>
+            </div>
+            <div class="panel"><div class="panel-head"><div><div class="panel-title">Ready-to-review handoff</div><div class="panel-sub">Editable structured summary for receiving team</div></div><span class="tag teal">Draft</span></div><div class="handoff"><div class="handoff-copy" id="handoffText"><strong>Situation:</strong> 68-year-old reporting 45 minutes of worsening exertional chest tightness with left arm radiation, sweating, and nausea. <strong>Background:</strong> Hypertension and prior coronary stent. <strong>Assessment:</strong> High-priority symptom pattern requires immediate clinician review. <strong>Request:</strong> Confirm location, current condition, and escalation pathway.</div><div class="handoff-actions"><button class="primary" id="copy"><i data-lucide="copy"></i>Copy handoff</button><button class="secondary" id="review"><i data-lucide="check"></i>Mark reviewed</button></div></div></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script>
+    lucide.createIcons();
+    const toast = document.querySelector('#toast');
+    const show = message => { toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2600); };
+    document.querySelector('#analyze').addEventListener('click', () => { document.querySelector('#results').animate([{opacity:.45,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}], {duration:360}); show('Narrative structured for clinician review.'); });
+    document.querySelector('#clear').addEventListener('click', () => { document.querySelector('#narrative').value = ''; show('Narrative cleared.'); });
+    document.querySelector('#sample').addEventListener('click', () => { document.querySelector('#narrative').value = 'Patient reports sudden dizziness and weakness since lunch. She has type 2 diabetes and has not checked her glucose today. She is alert, alone at home, and says she feels like she may faint.'; show('Alternate fictional narrative loaded.'); });
+    document.querySelector('#copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText(document.querySelector('#handoffText').innerText); show('Handoff copied to clipboard.'); } catch { show('Select the handoff text to copy it.'); } });
+    document.querySelector('#review').addEventListener('click', e => { e.currentTarget.innerHTML = '<i data-lucide="check-check"></i> Reviewed'; lucide.createIcons(); show('Handoff marked reviewed.'); });
+  </script>
+</body>
+</html>

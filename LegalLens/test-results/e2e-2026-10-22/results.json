@@ -1,0 +1,169 @@
+{
+  "run_date": "2026-10-22",
+  "ui": "http://127.0.0.1:5173",
+  "api": "http://127.0.0.1:18000",
+  "model_mode": "local deterministic stub for workflow integration; no live LLM output",
+  "results": [
+    {
+      "id": "LLM-01",
+      "title": "Check configured live OpenAI credential",
+      "status": "BLOCKED",
+      "observed": "A separate real UI request reached OpenAI and received HTTP 401 invalid_api_key. This run uses a deterministic local stub for workflow integration only; it does not validate real LLM output.",
+      "screenshot": ""
+    },
+    {
+      "id": "UI-01",
+      "title": "Load workspace and check backend readiness",
+      "status": "PASS",
+      "observed": "UI displayed Backend connected after /health and /ready succeeded.",
+      "screenshot": "evidence/UI-01-workspace.png"
+    },
+    {
+      "id": "UI-02",
+      "title": "Create a conversation and attach a synthetic lease",
+      "status": "PASS",
+      "observed": "Upload appears in the conversation composer: synthetic-lease.docx",
+      "screenshot": "evidence/UI-02-created-and-document-attached.png"
+    },
+    {
+      "id": "UI-03",
+      "title": "Ask a question and verify LLM answer plus grounded citation",
+      "status": "PASS",
+      "observed": "Assistant persisted with cited excerpt: synthetic-lease.docx; response=The monthly base rent is $2,450, due on the first day of each month. A five-day grace period applies before the $75 late fee. [1]",
+      "screenshot": "evidence/UI-03-ask-answer-citations.png"
+    },
+    {
+      "id": "UI-04",
+      "title": "Rename the conversation through the UI",
+      "status": "PASS",
+      "observed": "Completed; see screenshot evidence.",
+      "screenshot": "evidence/UI-04-renamed-conversation.png"
+    },
+    {
+      "id": "UI-05",
+      "title": "Create a new conversation and select the existing lease",
+      "status": "PASS",
+      "observed": "Completed; see screenshot evidence.",
+      "screenshot": "evidence/UI-05-existing-document-attached.png"
+    },
+    {
+      "id": "UI-06",
+      "title": "Summarize the existing document in the new conversation",
+      "status": "PASS",
+      "observed": "Summary included rent, notice period and citations. The lease runs through November 30, 2027. Monthly rent is $2,450 due on the first; the late fee is $75 after a five-day grace period. Tenant notice is due 60 days before vacating, and landlord maintains HVAC. [1]",
+      "screenshot": "evidence/UI-06-existing-document-summary.png"
+    },
+    {
+      "id": "UI-07",
+      "title": "Upload a new document and summarize it",
+      "status": "PASS",
+      "observed": "Document extracted locally (ready); summary included policy terms with citations. The synthetic policy requires submission within 30 calendar days, manager approval above $500, receipts at $25 or more, and reimbursement on the next monthly cycle after approval [1].",
+      "screenshot": "evidence/UI-07-uploaded-document-summary.png"
+    },
+    {
+      "id": "UI-08",
+      "title": "Draft a memo in a third conversation",
+      "status": "PASS",
+      "observed": "Assistant generated and persisted a memo. **Issue**  Whether the synthetic lease states clear payment and notice terms. [1]     **Brief Answer**  It does. [1]     **Key Facts**  Rent is $2,450 monthly, due on the first, with a five-day grace period and $75 late fee. [1]     **Analysis**  The tenant must give 60 days written notice; the landlord maintains HVAC. [1]     **Open Questions**  Confirm delivery method for written notice. [1]",
+      "screenshot": "evidence/UI-08-draft-memo.png"
+    },
+    {
+      "id": "UI-09",
+      "title": "Persist jurisdiction selection",
+      "status": "PASS",
+      "observed": "Selecting California updated the conversation through the UI and API.",
+      "screenshot": ""
+    },
+    {
+      "id": "UI-10",
+      "title": "Reject unsupported upload type",
+      "status": "PASS",
+      "observed": "Only non-empty PDF or DOCX files up to 25 MB are accepted.",
+      "screenshot": "evidence/UI-10-unsupported-file.png"
+    },
+    {
+      "id": "UI-11",
+      "title": "Remove an uploaded attachment",
+      "status": "PASS",
+      "observed": "Attachment chip disappeared and document row was deleted.",
+      "screenshot": "evidence/UI-11-attachment-removed.png"
+    },
+    {
+      "id": "UI-12",
+      "title": "Search conversation history",
+      "status": "PASS",
+      "observed": "Search filtered the sidebar to the renamed conversation.",
+      "screenshot": "evidence/UI-12-search-history.png"
+    },
+    {
+      "id": "UI-13",
+      "title": "Use the Summary starter card",
+      "status": "PASS",
+      "observed": "Starter selected Summary and populated its suggested prompt.",
+      "screenshot": "evidence/UI-13-summary-starter.png"
+    },
+    {
+      "id": "UI-14",
+      "title": "Use Ctrl+K to start a new conversation",
+      "status": "PASS",
+      "observed": "Shortcut returned the UI to a blank conversation composer.",
+      "screenshot": ""
+    },
+    {
+      "id": "UI-15",
+      "title": "Copy an assistant message",
+      "status": "PASS",
+      "observed": "Clipboard success toast shown.",
+      "screenshot": "evidence/UI-15-copy-message.png"
+    },
+    {
+      "id": "UI-16",
+      "title": "Check Export control",
+      "status": "UNAVAILABLE",
+      "observed": "UI reports export is not available in this backend version.",
+      "screenshot": ""
+    },
+    {
+      "id": "UI-17a",
+      "title": "Cancel conversation deletion",
+      "status": "PASS",
+      "observed": "Cancel kept the conversation and messages intact.",
+      "screenshot": "evidence/UI-17a-delete-cancel.png"
+    },
+    {
+      "id": "UI-17b",
+      "title": "Confirm conversation deletion",
+      "status": "PASS",
+      "observed": "UI confirmation deleted the conversation; API subsequently returned 404.",
+      "screenshot": "evidence/UI-17b-delete-confirm.png"
+    },
+    {
+      "id": "UI-18",
+      "title": "Upload PDF and validate extraction support",
+      "status": "BLOCKED",
+      "observed": "PDF upload reached extraction but the current backend virtual environment lacks pypdf. Dependency is declared but not installed in this environment.",
+      "screenshot": "evidence/UI-18-pdf-dependency-blocked.png"
+    },
+    {
+      "id": "BUILD-01",
+      "title": "Build the frontend",
+      "status": "PASS",
+      "observed": "npm.cmd run build: TypeScript and Vite production build succeeded.",
+      "screenshot": ""
+    },
+    {
+      "id": "API-01",
+      "title": "Verify test backend readiness",
+      "status": "PASS",
+      "observed": "{\"status\":200,\"body\":{\"status\":\"ready\",\"dependencies\":{\"database\":\"ready\",\"document_storage\":\"ready\"}}}",
+      "screenshot": ""
+    },
+    {
+      "id": "BROWSER-01",
+      "title": "Browser JavaScript exceptions",
+      "status": "PASS",
+      "observed": "No uncaught JavaScript exceptions observed.",
+      "screenshot": ""
+    }
+  ]
+}

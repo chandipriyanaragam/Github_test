@@ -1,0 +1,8 @@
+.venv/
+.venv-previous/
+.uv-cache/
+.env
+var/
+__pycache__/
+*.py[cod]
+.pytest_cache/

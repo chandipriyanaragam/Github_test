@@ -1,0 +1,81 @@
+name: LegalLens CI
+
+# Run CI for proposed changes to main, updates to main, or manual requests.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Keep the workflow read-only against repository contents.
+permissions:
+  contents: read
+
+# Avoid spending CI time on older runs for the same branch or pull request.
+concurrency:
+  group: legallens-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Verify the frontend can install its locked dependencies and produce a build.
+  frontend:
+    name: Frontend production build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: LegalLens/frontend
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: LegalLens/frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+  # Check backend code quality, run tests, build its container, and retain reports.
+  backend:
+    name: Backend quality, tests, and image build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: LegalLens/backend
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install backend and CI tools
+        run: python -m pip install --upgrade pip && pip install -e ".[dev]"
+
+      - name: Check formatting and lint
+        run: ruff check app tests && ruff format --check tests
+
+      - name: Run unit tests and generate HTML reports
+        run: mkdir -p reports && pytest --cov=app --cov-report=term-missing --cov-report=html:reports/coverage --html=reports/tests.html --self-contained-html
+
+      - name: Build backend Docker image
+        run: docker build --tag legallens-backend:ci .
+
+      - name: Upload CI HTML reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legallens-ci-html-reports
+          path: |
+            LegalLens/backend/reports/tests.html
+            LegalLens/backend/reports/coverage/
+          if-no-files-found: warn
+          retention-days: 14

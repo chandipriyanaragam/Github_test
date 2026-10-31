@@ -110,3 +110,4 @@ jobs:
             LegalLens/backend/reports/coverage/
           if-no-files-found: warn
           retention-days: 14
+test name
